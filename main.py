@@ -155,10 +155,11 @@ def main():
     recommended_for_sql = pd.DataFrame(similarity_scores, columns=["user_id", "open_job_id", "similarity_score"])
 
     engine = create_engine("mysql+pymysql://{user}:{pw}@{host}/{db}"
-                           .format(host="ad-project-db.cjpnytpkmzuh.ap-southeast-1.rds.amazonaws.com:3306",
-                                   db="ad_locum", user="admin", pw="SA1IVQjKfuSavXKwJoOk"))
+                           .format(host="sql_url",
+                                   db="ad_locum", user="admin", pw="pw"))
 
     recommended_for_sql.to_sql('recommended_job', engine, index=True, index_label="id", if_exists='replace')
+
 
 if __name__ == '__main__':
     main()
