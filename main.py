@@ -2,12 +2,9 @@
 import pandas as pd
 import numpy as np
 import json
-import certifi
-import ssl
-import datetime
+import requests
 from pandas import json_normalize
 from sqlalchemy import create_engine
-from urllib.request import urlopen
 from sklearn.metrics.pairwise import cosine_similarity
 
 
@@ -15,18 +12,18 @@ def main():
     # get JSON for all open
     url = "https://8aa1-103-252-200-84.ap.ngrok.io/api/jobs/allopen"
 
-    response = urlopen(url, context=ssl.create_default_context(cafile=certifi.where()))
+    response = requests.get(f"{url}")
 
-    data_json_open = json.loads(response.read())
+    data_json_open = json.loads(response.text)
 
     print(data_json_open)
 
     # get JSON for all jobs tagged with a locum
     url = "https://8aa1-103-252-200-84.ap.ngrok.io/api/jobs/allapplied"
 
-    response = urlopen(url, context=ssl.create_default_context(cafile=certifi.where()))
+    response = requests.get(f"{url}")
 
-    data_json_applied = json.loads(response.read())
+    data_json_applied = json.loads(response.text)
 
     print(data_json_applied)
 
