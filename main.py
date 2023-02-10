@@ -12,20 +12,24 @@ def main():
     # get JSON for all open
     url = "https://8aa1-103-252-200-84.ap.ngrok.io/api/jobs/allopen"
 
-    response = requests.get(f"{url}")
+    response_open = requests.get(f"{url}")
 
-    data_json_open = json.loads(response.text)
-
-    print(data_json_open)
+    if response_open is not None:
+        data_json_open = json.loads(response_open.text)
+        print(data_json_open)
+    else:
+        exit()
 
     # get JSON for all jobs tagged with a locum
     url = "https://8aa1-103-252-200-84.ap.ngrok.io/api/jobs/allapplied"
 
-    response = requests.get(f"{url}")
+    response_applied = requests.get(f"{url}")
 
-    data_json_applied = json.loads(response.text)
-
-    print(data_json_applied)
+    if response_applied is not None:
+        data_json_applied = json.loads(response_applied.text)
+        print(data_json_applied)
+    else:
+        exit()
 
     df_open = json_normalize(data_json_open)
 
