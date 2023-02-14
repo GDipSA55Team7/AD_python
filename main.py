@@ -10,7 +10,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 def main():
     # get JSON for all open
-    url = "https://8aa1-103-252-200-84.ap.ngrok.io/api/jobs/allopen"
+    url = "http://localhost:8080/api/jobs/allopen"
 
     response_open = requests.get(f"{url}")
 
@@ -21,7 +21,7 @@ def main():
         exit()
 
     # get JSON for all jobs tagged with a locum
-    url = "https://8aa1-103-252-200-84.ap.ngrok.io/api/jobs/allapplied"
+    url = "http://localhost:8080/api/jobs/allapplied"
 
     response_applied = requests.get(f"{url}")
 
@@ -47,18 +47,18 @@ def main():
         first_two_digits = str(postal_code[:2])
 
         if first_two_digits in ['31', '32', '33', '34', '35', '36', '37', '56', '57']:
-            return 'central'
+            return 'Central'
         elif first_two_digits in ['53', '54', '55', '82', '72', '73', '77', '78', '75', '76', '79', '80']:
-            return 'north'
+            return 'North'
         elif first_two_digits in ['38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '81',
                                   '51', '52']:
-            return 'east'
+            return 'East'
         elif first_two_digits in ['58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71']:
-            return 'west'
+            return 'West'
         elif first_two_digits in ['01', '02', '03', '04', '05', '06', '07', '08', '14', '15', '16', '09', '10', '11',
                                   '12', '13', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28',
                                   '29', '30']:
-            return 'south'
+            return 'South'
         else:
             return 'Invalid Postal Code'
 
@@ -159,8 +159,8 @@ def main():
     recommended_for_sql = pd.DataFrame(similarity_scores, columns=["user_id", "open_job_id", "similarity_score"])
 
     engine = create_engine("mysql+pymysql://{user}:{pw}@{host}/{db}"
-                           .format(host="sql_url",
-                                   db="ad_locum", user="admin", pw="pw"))
+                           .format(host="localhost:3306/",
+                                   db="ad_locum", user="root", pw="Nh77&LxD^*D$"))
 
     recommended_for_sql.to_sql('recommended_job', engine, index=True, index_label="id", if_exists='replace')
 
